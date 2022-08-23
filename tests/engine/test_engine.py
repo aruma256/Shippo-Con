@@ -4,6 +4,7 @@ from numpy.testing import assert_array_equal, assert_allclose
 from shippo_con.engine.engine import Engine
 from shippo_con.engine.engine_params import EngineParams
 
+
 class TestEngine:
 
     def test_reset(self):
@@ -37,4 +38,3 @@ class TestEngine:
             engine.calc_pos(),
             np.array([0.25, -0.5])
         )
-
