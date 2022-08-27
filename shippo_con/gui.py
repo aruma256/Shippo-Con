@@ -13,16 +13,23 @@ class GUI:
 
     def __init__(self, core: core.Core):
         self._core = core
+        self._created_event = threading.Event()
 
     def create(self):
         self._thread = threading.Thread(target=self._run, daemon=True)
         self._thread.start()
+        assert self._created_event.wait(timeout=5)
 
     def _run(self):
-        self.root = root = tk.Tk()
-        root.geometry('400x300')
-        root.protocol("WM_DELETE_WINDOW", self._core.kill)
-        frm = ttk.Frame(root, padding=10)
+        self._root = root = tk.Tk()
+        self._create_gui_elements()
+        self._created_event.set()
+        root.mainloop()
+
+    def _create_gui_elements(self):
+        self._root.geometry('400x300')
+        self._root.protocol("WM_DELETE_WINDOW", self._core.kill)
+        frm = ttk.Frame(self._root, padding=10)
         frm.grid()
         row = 0
         ttk.Label(frm, text=TITLE).grid(row=row, column=0, columnspan=2)
@@ -73,7 +80,6 @@ class GUI:
         row += 1
         ttk.Button(
             frm, text="Quit", command=self._core.kill).grid(row=row, column=0)
-        root.mainloop()
 
     def update(self, raw_input, params):
         self.var_raw_input_x.set(raw_input[0])
