@@ -1,6 +1,7 @@
 import threading
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 
 from shippo_con import core
 
@@ -29,12 +30,43 @@ class GUI:
     def _create_gui_elements(self):
         self._root.geometry('400x300')
         self._root.protocol("WM_DELETE_WINDOW", self._core.kill)
+        self._create_top_frame()
+        self._create_settings_frame()
+        self._create_viewer_frame()
+
+    def _create_top_frame(self):
         frm = ttk.Frame(self._root, padding=10)
         frm.grid()
         row = 0
         ttk.Label(frm, text=TITLE).grid(row=row, column=0, columnspan=2)
-        #
-        row += 1
+
+    def _connect_joycon(self, side):
+        try:
+            self._core.connect_joycon(side)
+        except ValueError:
+            messagebox.showerror('エラー', '接続できませんでした。')
+        except Exception as e:
+            messagebox.showerror('不明なエラー', str(e))
+
+    def _create_settings_frame(self):
+        frm = ttk.Frame(self._root, padding=10)
+        frm.grid()
+        ttk.Button(
+            frm,
+            text="Joy-Con L を使う",
+            command=lambda: self._connect_joycon('L'),
+            ).grid(row=0, column=0)
+        ttk.Button(
+            frm,
+            text="Joy-Con R を使う",
+            command=lambda: self._connect_joycon('R'),
+            ).grid(row=0, column=1)
+        # ttk.Label(frm, text=TITLE).grid(row=row, column=0)
+
+    def _create_viewer_frame(self):
+        frm = ttk.Frame(self._root, padding=10)
+        frm.grid()
+        row = 0
         ttk.Label(frm, text="--var--").grid(row=row, column=0)
         ttk.Label(frm, text="--value--").grid(row=row, column=1)
         ttk.Label(frm, text="--graph--").grid(row=row, column=2)

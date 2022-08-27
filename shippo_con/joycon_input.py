@@ -1,11 +1,14 @@
 import numpy as np
-from pyjoycon import JoyCon, get_L_id
+from pyjoycon import JoyCon, get_L_id, get_R_id
 
 
 class JoyconInput:
 
-    def __init__(self) -> None:
-        self._joycon = JoyCon(*get_L_id())
+    def __init__(self, side) -> None:
+        if side == 'R':
+            self._joycon = JoyCon(*get_R_id())
+        else:
+            self._joycon = JoyCon(*get_L_id())
 
     def get(self):
         gyro = [self._joycon.get_gyro_x(), self._joycon.get_gyro_y()]
