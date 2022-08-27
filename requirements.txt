@@ -1,4 +1,5 @@
 numpy >= 1.12.0
+requests
 python-osc
 joycon-python
 hidapi # for joycon-python

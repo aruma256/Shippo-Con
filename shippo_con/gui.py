@@ -2,12 +2,14 @@ import threading
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+import requests
 
 from shippo_con import core
 
 TITLE = f"{core.NAME} - {core.VERSION}"
 CANVAS_SIZE = 100
 ARROW_TAG = 'arrow'
+UPDATE_JSON_URL = 'https://github.com/aruma256/Shippo-Con/raw/main/version_info.json' # noqa
 
 
 class GUI:
@@ -25,7 +27,18 @@ class GUI:
         self._root = root = tk.Tk()
         self._create_gui_elements()
         self._created_event.set()
+        threading.Thread(target=self._update_check, daemon=True).start()
         root.mainloop()
+
+    def _update_check(self):
+        try:
+            res = requests.get(UPDATE_JSON_URL, timeout=5)
+            if res.status_code == 200:
+                data = res.json()
+                if data['recommended'] > core.VERSION:
+                    messagebox.showinfo(message='新しいバージョンが公開されています')
+        except Exception:
+            pass
 
     def _create_gui_elements(self):
         self._root.geometry('400x300')
