@@ -12,14 +12,14 @@ VERSION = '0.1.0'
 
 class Core:
 
-    def __init__(self) -> None:
+    def __init__(self, server, port, param_x_name, param_y_name) -> None:
         self._input = None
         self.engine_params = EngineParams()
         self._engine = Engine(self.engine_params)
-        self._client = udp_client.SimpleUDPClient("127.0.0.1", 9000)
+        self._client = udp_client.SimpleUDPClient(server, port)
         self._running = True
-        self.param_x_name = '/avatar/parameters/Fx_Tail_X'
-        self.param_y_name = '/avatar/parameters/Fx_Tail_Y'
+        self.param_x_name = param_x_name
+        self.param_y_name = param_y_name
 
     def connect_joycon(self, side):
         self._input = JoyconInput(side)
