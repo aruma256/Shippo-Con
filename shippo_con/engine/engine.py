@@ -25,6 +25,7 @@ class Engine:
         self._g2 += self._g1
         self._g2 *= self.params.g2_decay_factor
         self._params = np.tanh(0.0001 * self.params.amp * self._g2)
+        self._params *= self.params.flip
 
     def get_status(self):
         return Status(

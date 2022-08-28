@@ -115,6 +115,27 @@ class GUI:
             command=on_change_y).grid(row=row, column=1)
         ttk.Label(
             frm, textvariable=scale_y_label_value).grid(row=row, column=2)
+        #
+        frm = ttk.Frame(self._root, padding=10)
+        frm.grid()
+
+        var_flip_x = tk.BooleanVar()
+
+        def flip_x():
+            self._core.engine_params.flip[0] = -1 if var_flip_x.get() else 1
+
+        ttk.Checkbutton(
+            frm, text="左右反転",
+            command=flip_x, variable=var_flip_x).grid(row=0, column=0)
+
+        var_flip_y = tk.BooleanVar()
+
+        def flip_y():
+            self._core.engine_params.flip[1] = -1 if var_flip_y.get() else 1
+
+        ttk.Checkbutton(
+            frm, text="上下反転",
+            command=flip_y, variable=var_flip_y).grid(row=0, column=1)
 
     def _create_viewer_frame(self):
         frm = ttk.Frame(self._root, padding=10)

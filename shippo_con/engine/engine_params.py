@@ -7,3 +7,4 @@ class EngineParams:
         self.decay_factor = decay_factor
         self.g2_decay_factor = 0.09
         self.amp = np.array([50, 70])
+        self.flip = np.array([1, 1])
