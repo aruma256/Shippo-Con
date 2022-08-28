@@ -2,6 +2,7 @@ from time import sleep
 from pythonosc import udp_client
 from shippo_con.engine.engine import Engine
 from shippo_con import gui
+from shippo_con.engine.engine_params import EngineParams
 from shippo_con.joycon_input import JoyconInput
 
 FPS = 72
@@ -13,7 +14,8 @@ class Core:
 
     def __init__(self) -> None:
         self._input = None
-        self._engine = Engine()
+        self.engine_params = EngineParams()
+        self._engine = Engine(self.engine_params)
         self._client = udp_client.SimpleUDPClient("127.0.0.1", 9000)
         self._running = True
         self.param_x_name = '/avatar/parameters/Fx_Tail_X'
@@ -48,7 +50,6 @@ class Core:
 
             self._client.send_message(self.param_x_name, status.params[0])
             self._client.send_message(self.param_y_name, status.params[1])
-
 
     def kill(self):
         self._running = False

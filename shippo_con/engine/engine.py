@@ -6,10 +6,11 @@ from shippo_con.engine.engine_params import EngineParams
 
 Status = namedtuple('Status', ['raw_input', 'g1', 'g2', 'params'])
 
+
 class Engine:
 
-    def __init__(self, params: EngineParams = None) -> None:
-        self.params = params or EngineParams()
+    def __init__(self, params: EngineParams) -> None:
+        self.params = params
         self.reset()
 
     def reset(self):
@@ -19,11 +20,11 @@ class Engine:
 
     def update(self, _input):
         self._raw_input = _input
-        self._g1 *= 0.99
+        self._g1 *= self.params.decay_factor
         self._g1 += self._raw_input
         self._g2 += self._g1
-        self._g2 *= 0.09
-        self._params = np.tanh(0.005 * self._g2)
+        self._g2 *= self.params.g2_decay_factor
+        self._params = np.tanh(0.0001 * self.params.amp * self._g2)
 
     def get_status(self):
         return Status(

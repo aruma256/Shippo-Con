@@ -41,10 +41,10 @@ class GUI:
             pass
 
     def _create_gui_elements(self):
-        self._root.geometry('400x300')
+        self._root.geometry('400x400')
         self._root.protocol("WM_DELETE_WINDOW", self._core.kill)
         self._create_top_frame()
-        self._create_settings_frame()
+        self._create_settings_frames()
         self._create_viewer_frame()
 
     def _create_top_frame(self):
@@ -61,7 +61,7 @@ class GUI:
         except Exception as e:
             messagebox.showerror('不明なエラー', str(e))
 
-    def _create_settings_frame(self):
+    def _create_settings_frames(self):
         frm = ttk.Frame(self._root, padding=10)
         frm.grid()
         ttk.Button(
@@ -74,7 +74,41 @@ class GUI:
             text="Joy-Con R を使う",
             command=lambda: self._connect_joycon('R'),
             ).grid(row=0, column=1)
-        # ttk.Label(frm, text=TITLE).grid(row=row, column=0)
+        #
+        frm = ttk.Frame(self._root, padding=10)
+        frm.grid()
+        row = 0
+        #
+        ttk.Label(frm, text='振れやすさ(横)').grid(row=row, column=0)
+        scale_x_label_value = tk.StringVar(
+            value=str(self._core.engine_params.amp[0]))
+
+        def on_change_x(value):
+            value = int(float(value))
+            scale_x_label_value.set(str(value))
+            self._core.engine_params.amp[0] = value
+
+        ttk.Scale(
+            frm, from_=1, to=200, value=self._core.engine_params.amp[0],
+            command=on_change_x).grid(row=row, column=1)
+        ttk.Label(
+            frm, textvariable=scale_x_label_value).grid(row=row, column=2)
+        #
+        row += 1
+        ttk.Label(frm, text='振れやすさ(縦)').grid(row=row, column=0)
+        scale_y_label_value = tk.StringVar(
+            value=str(self._core.engine_params.amp[1]))
+
+        def on_change_y(value):
+            value = int(float(value))
+            scale_y_label_value.set(str(value))
+            self._core.engine_params.amp[1] = value
+
+        ttk.Scale(
+            frm, from_=1, to=200, value=self._core.engine_params.amp[1],
+            command=on_change_y).grid(row=row, column=1)
+        ttk.Label(
+            frm, textvariable=scale_y_label_value).grid(row=row, column=2)
 
     def _create_viewer_frame(self):
         frm = ttk.Frame(self._root, padding=10)
@@ -158,6 +192,7 @@ class GUI:
             center_offset + status.params[0]*center_offset,
             center_offset - status.params[1]*center_offset,
         )
+
 
 def to_str(value):
     return f"{value:.2f}"
