@@ -12,6 +12,12 @@ ARROW_TAG = 'arrow'
 UPDATE_JSON_URL = 'https://github.com/aruma256/Shippo-Con/raw/main/version_info.json' # noqa
 
 
+def _is_local_version_outdated(remote_version, local_version):
+    remote = tuple(map(int, remote_version.split('.')))
+    local = tuple(map(int, local_version.split('.')))
+    return remote > local
+
+
 class GUI:
 
     def __init__(self, core: core.Core):
@@ -35,7 +41,7 @@ class GUI:
             res = requests.get(UPDATE_JSON_URL, timeout=5)
             if res.status_code == 200:
                 data = res.json()
-                if data['recommended'] > core.VERSION:
+                if _is_local_version_outdated(data['recommended'], core.VERSION): # noqa
                     messagebox.showinfo(message='新しいバージョンが公開されています')
         except Exception:
             pass
