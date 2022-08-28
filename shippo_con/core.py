@@ -41,15 +41,14 @@ class Core:
                 self._engine.reset()
                 continue
 
-            raw_input = self._input.get()
-            self._engine.update(raw_input)
+            self._engine.update(self._input.get())
 
-            params = self._engine.calc_pos()
+            status = self._engine.get_status()
+            self._gui.update(status)
 
-            self._gui.update(raw_input, params)
+            self._client.send_message(self.param_x_name, status.params[0])
+            self._client.send_message(self.param_y_name, status.params[1])
 
-            self._client.send_message(self.param_x_name, params[0])
-            self._client.send_message(self.param_y_name, params[1])
 
     def kill(self):
         self._running = False
