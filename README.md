@@ -4,7 +4,7 @@ Nintendo Switch のジョイコンを腰付近に取り付け、
 実際の自然な体の揺れをジャイロ情報から取得し、  
 ExParams経由でVRChatアバターの尻尾を揺らそうシステム
 
-[動画](https://twitter.com/aruma256_vr/status/1563802540197625857)
+![](docs/shippo-con.mp4)
 
 つくっているひと
 * [@aruma256](https://twitter.com/aruma256)
