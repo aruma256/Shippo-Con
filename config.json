@@ -1,8 +1,0 @@
-{
-    "OSC": {
-        "server": "127.0.0.1",
-        "port": 9000,
-        "param_x_name": "/avatar/parameters/Fx_Tail_X",
-        "param_y_name": "/avatar/parameters/Fx_Tail_Y"
-    }
-}
