@@ -29,6 +29,9 @@ jobs:
             Freely Distributable;
             MIT License;
             Mozilla Public License 2.0 (MPL 2.0);
+            GNU Lesser General Public License v2 or later (LGPLv2+);
+            Artistic License;
+            Python Software Foundation License;
           "
 
   flake8:
