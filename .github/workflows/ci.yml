@@ -34,7 +34,7 @@ jobs:
             Python Software Foundation License;
           "
 
-  flake8:
+  static-check:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -46,9 +46,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install flake8
+          pip install flake8 mypy
       - name: Run Flake8
         run: flake8
+      - name: Run mypy
+        run: mypy --strict --ignore-missing-imports .
 
   tests:
     runs-on: windows-latest
