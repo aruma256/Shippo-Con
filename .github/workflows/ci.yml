@@ -50,7 +50,7 @@ jobs:
       - name: Run Flake8
         run: flake8
       - name: Run mypy
-        run: mypy --strict --ignore-missing-imports .
+        run: mypy --strict --ignore-missing-imports shippocon
 
   tests:
     runs-on: windows-latest

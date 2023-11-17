@@ -35,7 +35,7 @@ class OSCValueProvider:
         server = AsyncIOOSCUDPServer(
             (ip, port),
             self._build_dispatcher(),
-            asyncio.get_event_loop(),  # type: ignore
+            asyncio.get_event_loop(),
         )
         self._transport, protocol = await server.create_serve_endpoint()
 
