@@ -31,11 +31,11 @@ async def main(page: ft.Page) -> None:
 
     core = Core()
 
-    def connect_L_clicked() -> None:
-        core.connect_L()
+    async def connect_L_clicked() -> None:
+        await core.connect_L()
 
-    def connect_R_clicked() -> None:
-        core.connect_R()
+    async def connect_R_clicked() -> None:
+        await core.connect_R()
 
     appbar = ft.AppBar(
         title=ft.Text(app_title),
